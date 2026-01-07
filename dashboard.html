@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CRM Analytics - Advanced analytics and reporting dashboard">
+    <meta name="keywords" content="CRM analytics, reporting, dashboard, charts, metrics, KPI">
+    <meta name="author" content="CRM System">
+    <title>CRM Analytics - Advanced Dashboard</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-customer-service me-2"></i>CRM System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="add-ticket.html">
+                            <i class="fas fa-plus-circle me-1"></i> Add Ticket
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="dashboard.html">
+                            <i class="fas fa-chart-line me-1"></i> Analytics
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> Admin User
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                    <div class="position-sticky pt-3">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fas fa-home me-2"></i> Home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="tickets.html" data-action="open-tickets">
+                                    <i class="fas fa-ticket-alt me-2"></i> Tickets
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-users me-2"></i> Customers
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="dashboard.html">
+                                    <i class="fas fa-chart-bar me-2"></i> Analytics
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <!-- Main Analytics Content -->
+                <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Analytics Dashboard</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <div class="btn-group me-2">
+                                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="refreshData()">
+                                    <i class="fas fa-sync-alt"></i> Refresh
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="exportReport()">
+                                    <i class="fas fa-download"></i> Export
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown">
+                                    <i class="fas fa-calendar"></i> Date Range
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" onclick="setDateRange('today')">Today</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="setDateRange('week')">This Week</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="setDateRange('month')">This Month</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="setDateRange('quarter')">This Quarter</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="setDateRange('year')">This Year</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KPI Cards -->
+                    <div class="row mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Total Revenue</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$124,563</div>
+                                            <div class="text-xs text-success mt-1">
+                                                <i class="fas fa-arrow-up"></i> 12.5% from last month
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Customer Satisfaction</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">94.2%</div>
+                                            <div class="text-xs text-success mt-1">
+                                                <i class="fas fa-arrow-up"></i> 3.1% from last month
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-smile fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                                Avg Response Time</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">2.4 hrs</div>
+                                            <div class="text-xs text-success mt-1">
+                                                <i class="fas fa-arrow-down"></i> 18% faster
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-clock fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Active Agents</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">28/32</div>
+                                            <div class="text-xs text-muted mt-1">
+                                                87.5% online
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-users fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row 1 -->
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                                    <h6 class="m-0 font-weight-bold text-primary">Ticket Trends</h6>
+                                    <div class="btn-group btn-group-sm">
+                                        <button type="button" class="btn btn-outline-primary active" onclick="updateTrendChart('daily')">Daily</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="updateTrendChart('weekly')">Weekly</button>
+                                        <button type="button" class="btn btn-outline-primary" onclick="updateTrendChart('monthly')">Monthly</button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="trendChart" height="100"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Ticket Categories</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="categoryChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Row 2 -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Agent Performance</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="agentChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Resolution Time by Priority</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="resolutionChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Tables -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Top Performers</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Agent</th>
+                                                    <th>Tickets</th>
+                                                    <th>Resolved</th>
+                                                    <th>Rating</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Sarah Johnson</td>
+                                                    <td>156</td>
+                                                    <td>142</td>
+                                                    <td><span class="badge bg-success">4.8</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Mike Davis</td>
+                                                    <td>142</td>
+                                                    <td>128</td>
+                                                    <td><span class="badge bg-success">4.7</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Emily Wilson</td>
+                                                    <td>138</td>
+                                                    <td>125</td>
+                                                    <td><span class="badge bg-success">4.6</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>John Smith</td>
+                                                    <td>125</td>
+                                                    <td>110</td>
+                                                    <td><span class="badge bg-info">4.5</span></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Recent Activities</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="timeline">
+                                        <div class="timeline-item mb-3">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0">
+                                                    <i class="fas fa-check-circle text-success"></i>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h6 class="mb-1">Ticket #TK-001 Resolved</h6>
+                                                    <p class="text-muted small mb-0">Sarah Johnson resolved login issue - 5 mins ago</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item mb-3">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0">
+                                                    <i class="fas fa-plus-circle text-primary"></i>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h6 class="mb-1">New Ticket Created</h6>
+                                                    <p class="text-muted small mb-0">Payment error ticket from ABC Corp - 15 mins ago</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item mb-3">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0">
+                                                    <i class="fas fa-user-plus text-info"></i>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h6 class="mb-1">New Customer Added</h6>
+                                                    <p class="text-muted small mb-0">Tech Solutions Inc. joined platform - 1 hour ago</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="timeline-item mb-3">
+                                            <div class="d-flex">
+                                                <div class="flex-shrink-0">
+                                                    <i class="fas fa-exclamation-triangle text-warning"></i>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <h6 class="mb-1">High Priority Ticket</h6>
+                                                    <p class="text-muted small mb-0">System outage reported by Global Tech - 2 hours ago</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom JS -->
+    <script src="main.js"></script>
+    <script>
+        // Analytics-specific JavaScript
+        $(document).ready(function() {
+            initializeAnalyticsCharts();
+            setupRealTimeUpdates();
+        });
+
+        function initializeAnalyticsCharts() {
+            // Trend Chart
+            var trendCtx = document.getElementById('trendChart');
+            if (trendCtx) {
+                window.trendChart = new Chart(trendCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        datasets: [{
+                            label: 'Created',
+                            data: [65, 78, 90, 81, 96, 85, 70],
+                            borderColor: '#007bff',
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            tension: 0.4
+                        }, {
+                            label: 'Resolved',
+                            data: [58, 72, 85, 76, 89, 78, 65],
+                            borderColor: '#28a745',
+                            backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Category Chart
+            var categoryCtx = document.getElementById('categoryChart');
+            if (categoryCtx) {
+                new Chart(categoryCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Technical', 'Billing', 'Account', 'Feature', 'Bug', 'Other'],
+                        datasets: [{
+                            data: [35, 20, 15, 12, 10, 8],
+                            backgroundColor: [
+                                '#007bff',
+                                '#28a745',
+                                '#ffc107',
+                                '#17a2b8',
+                                '#dc3545',
+                                '#6c757d'
+                            ]
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Agent Performance Chart
+            var agentCtx = document.getElementById('agentChart');
+            if (agentCtx) {
+                new Chart(agentCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Sarah', 'Mike', 'Emily', 'John', 'Alex', 'Lisa'],
+                        datasets: [{
+                            label: 'Tickets Resolved',
+                            data: [142, 128, 125, 110, 98, 87],
+                            backgroundColor: '#007bff'
+                        }, {
+                            label: 'Customer Rating',
+                            data: [4.8, 4.7, 4.6, 4.5, 4.4, 4.3],
+                            backgroundColor: '#28a745',
+                            yAxisID: 'y1'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                position: 'left'
+                            },
+                            y1: {
+                                beginAtZero: true,
+                                position: 'right',
+                                grid: {
+                                    drawOnChartArea: false
+                                },
+                                max: 5
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Resolution Time Chart
+            var resolutionCtx = document.getElementById('resolutionChart');
+            if (resolutionCtx) {
+                new Chart(resolutionCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Urgent', 'High', 'Medium', 'Low'],
+                        datasets: [{
+                            label: 'Average Hours',
+                            data: [1.2, 2.8, 4.5, 8.2],
+                            borderColor: '#ffc107',
+                            backgroundColor: 'rgba(255, 193, 7, 0.2)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            r: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function updateTrendChart(period) {
+            // Update button states
+            $('.btn-group .btn').removeClass('active');
+            $(event.target).addClass('active');
+
+            // Update chart data based on period
+            var labels, data1, data2;
+            
+            switch(period) {
+                case 'daily':
+                    labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                    data1 = [65, 78, 90, 81, 96, 85, 70];
+                    data2 = [58, 72, 85, 76, 89, 78, 65];
+                    break;
+                case 'weekly':
+                    labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+                    data1 = [320, 380, 420, 390];
+                    data2 = [295, 350, 395, 365];
+                    break;
+                case 'monthly':
+                    labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+                    data1 = [1200, 1350, 1400, 1380, 1450, 1500];
+                    data2 = [1100, 1250, 1320, 1280, 1350, 1420];
+                    break;
+            }
+
+            if (window.trendChart) {
+                window.trendChart.data.labels = labels;
+                window.trendChart.data.datasets[0].data = data1;
+                window.trendChart.data.datasets[1].data = data2;
+                window.trendChart.update();
+            }
+        }
+
+        function refreshData() {
+            // Show loading state
+            showAlert('info', 'Refreshing analytics data...');
+            
+            // Simulate data refresh
+            setTimeout(function() {
+                showAlert('success', 'Analytics data refreshed successfully!');
+                // In real implementation, this would fetch fresh data from API
+            }, 1500);
+        }
+
+        function exportReport() {
+            showAlert('info', 'Generating analytics report...');
+            
+            setTimeout(function() {
+                showAlert('success', 'Report exported successfully!');
+                // In real implementation, this would generate and download a report
+            }, 2000);
+        }
+
+        function setDateRange(range) {
+            showAlert('info', 'Updating date range to: ' + range);
+            // In real implementation, this would update all charts with new date range
+        }
+
+        function setupRealTimeUpdates() {
+            // Update KPI cards every 30 seconds
+            setInterval(function() {
+                updateKPICards();
+            }, 30000);
+        }
+
+        function updateKPICards() {
+            // Simulate real-time KPI updates
+            $('.card-body .h5').each(function() {
+                var $element = $(this);
+                var currentValue = $element.text();
+                
+                // Add subtle animation to indicate update
+                $element.parent().addClass('fade-in');
+                setTimeout(function() {
+                    $element.parent().removeClass('fade-in');
+                }, 1000);
+            });
+        }
+    </script>
+</body>
+</html>

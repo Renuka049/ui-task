@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tickets</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="tickets-page">
+  <!-- Navigation (same as other pages) -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="index.html">
+        <i class="fas fa-customer-service me-2"></i>CRM System
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-tachometer-alt me-1"></i> Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="add-ticket.html"><i class="fas fa-plus-circle me-1"></i> Add Ticket</a></li>
+          <li class="nav-item"><a class="nav-link" href="dashboard.html"><i class="fas fa-chart-line me-1"></i> Analytics</a></li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user-circle me-1"></i> Admin User
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+          <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+              <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-home me-2"></i> Home</a></li>
+              <li class="nav-item"><a class="nav-link active" href="tickets.html"><i class="fas fa-ticket-alt me-2"></i> Tickets</a></li>
+              <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-users me-2"></i> Customers</a></li>
+              <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-chart-bar me-2"></i> Reports</a></li>
+              <li class="nav-item"><a class="nav-link" href="index.html"><i class="fas fa-cog me-2"></i> Settings</a></li>
+            </ul>
+          </div>
+        </nav>
+
+        <!-- Tickets content -->
+        <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Tickets</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div>
+                <button id="raiseBtn" class="btn btn-primary btn-sm">Raise Ticket</button>
+                <button id="reassignBtn" class="btn btn-secondary btn-sm">Reassign</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tickets-toolbar">
+            <div class="tickets-filters w-100 d-flex align-items-center">
+              <input id="searchInput" placeholder="Search title or issue" class="form-control me-2" style="max-width:280px" />
+              <select id="typeSelect" class="form-select me-2" style="max-width:160px">
+                <option value="">All Types</option>
+                <option>Bug</option>
+                <option>Feature</option>
+                <option>Task</option>
+              </select>
+              <select id="deptSelect" class="form-select me-2" style="max-width:160px">
+                <option value="">All Departments</option>
+                <option>IT</option>
+                <option>HR</option>
+                <option>Finance</option>
+              </select>
+              <input id="idInput" placeholder="Enter Ticket ID" class="form-control me-2" style="max-width:140px" />
+              <button id="clearFilters" class="btn btn-light">Clear</button>
+            </div>
+          </div>
+
+          <table id="ticketsTable" class="tickets-table table table-striped table-bordered mt-3">
+    <thead>
+      <tr>
+        <th><input id="selectAll" type="checkbox"/></th>
+        <th>Ticket ID</th>
+        <th>Title</th>
+        <th>Issue</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Department</th>
+        <th>Sub-department</th>
+        <th>Create Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr data-id="TKT-001" data-type="Bug" data-dept="IT">
+        <td><input class="rowCheck" type="checkbox"/></td>
+        <td>TKT-001</td>
+        <td>Login fails intermittently</td>
+        <td>Users report occasional login errors</td>
+        <td>Bug</td>
+        <td><span class="status-badge status-open">Open</span></td>
+        <td>IT</td>
+        <td>Auth</td>
+        <td>2026-01-03</td>
+        <td class="actions tickets-actions"><button class="viewBtn">View</button></td>
+      </tr>
+      <tr data-id="TKT-002" data-type="Feature" data-dept="HR">
+        <td><input class="rowCheck" type="checkbox"/></td>
+        <td>TKT-002</td>
+        <td>Onboarding checklist</td>
+        <td>Add digital onboarding steps</td>
+        <td>Feature</td>
+        <td><span class="status-badge status-inprogress">In Progress</span></td>
+        <td>HR</td>
+        <td>Recruitment</td>
+        <td>2026-01-05</td>
+        <td class="actions"><button class="viewBtn">View</button></td>
+      </tr>
+      <tr data-id="TKT-003" data-type="Task" data-dept="Finance">
+        <td><input class="rowCheck" type="checkbox"/></td>
+        <td>TKT-003</td>
+        <td>Quarterly report</td>
+        <td>Prepare Q4 financials</td>
+        <td>Task</td>
+        <td><span class="status-badge status-closed">Closed</span></td>
+        <td>Finance</td>
+        <td>Reporting</td>
+        <td>2025-12-28</td>
+        <td class="actions"><button class="viewBtn">View</button></td>
+      </tr>
+      <tr data-id="TKT-004" data-type="Bug" data-dept="IT">
+        <td><input class="rowCheck" type="checkbox"/></td>
+        <td>TKT-004</td>
+        <td>Search slow</td>
+        <td>Search results take too long</td>
+        <td>Bug</td>
+        <td><span class="status-badge status-open">Open</span></td>
+        <td>IT</td>
+        <td>Search</td>
+        <td>2026-01-02</td>
+        <td class="actions"><button class="viewBtn">View</button></td>
+      </tr>
+      <tr data-id="TKT-005" data-type="Feature" data-dept="Product">
+        <td><input class="rowCheck" type="checkbox"/></td>
+        <td>TKT-005</td>
+        <td>Dark mode</td>
+        <td>Users requested dark theme</td>
+        <td>Feature</td>
+        <td><span class="status-badge status-new">New</span></td>
+        <td>Product</td>
+        <td>UX</td>
+        <td>2026-01-06</td>
+        <td class="actions"><button class="viewBtn">View</button></td>
+      </tr>
+      <tr data-id="TKT-006" data-type="Task" data-dept="Finance">
+        <td><input class="rowCheck" type="checkbox"/></td>
+        <td>TKT-006</td>
+        <td>Refunds review</td>
+        <td>Check refunds queue for anomalies</td>
+        <td>Task</td>
+        <td><span class="status-badge status-inprogress">In Progress</span></td>
+        <td>Finance</td>
+        <td>Payments</td>
+        <td>2025-12-30</td>
+        <td class="actions"><button class="viewBtn">View</button></td>
+      </tr>
+      <tr data-id="TKT-007" data-type="Bug" data-dept="Support">
+        <td><input class="rowCheck" type="checkbox"/></td>
+        <td>TKT-007</td>
+        <td>Email not sent</td>
+        <td>Transactional emails failing for some users</td>
+        <td>Bug</td>
+        <td><span class="status-badge status-waiting">Waiting</span></td>
+        <td>Support</td>
+        <td>Notifications</td>
+        <td>2026-01-04</td>
+        <td class="actions"><button class="viewBtn">View</button></td>
+      </tr>
+      <tr data-id="TKT-008" data-type="Feature" data-dept="HR">
+        <td><input class="rowCheck" type="checkbox"/></td>
+        <td>TKT-008</td>
+        <td>Timesheet export</td>
+        <td>Export timesheets to CSV</td>
+        <td>Feature</td>
+        <td><span class="status-badge status-open">Open</span></td>
+        <td>HR</td>
+        <td>Payroll</td>
+        <td>2026-01-01</td>
+        <td class="actions"><button class="viewBtn">View</button></td>
+      </tr>
+      <tr data-id="TKT-009" data-type="Task" data-dept="Ops">
+        <td><input class="rowCheck" type="checkbox"/></td>
+        <td>TKT-009</td>
+        <td>Server backup</td>
+        <td>Schedule nightly backups</td>
+        <td>Task</td>
+        <td><span class="status-badge status-inprogress">In Progress</span></td>
+        <td>Ops</td>
+        <td>Infrastructure</td>
+        <td>2025-12-20</td>
+        <td class="actions"><button class="viewBtn">View</button></td>
+      </tr>
+      <tr data-id="TKT-010" data-type="Bug" data-dept="IT">
+        <td><input class="rowCheck" type="checkbox"/></td>
+        <td>TKT-010</td>
+        <td>CSV import fails</td>
+        <td>Import errors for large CSV files</td>
+        <td>Bug</td>
+        <td><span class="status-badge status-open">Open</span></td>
+        <td>IT</td>
+        <td>Import</td>
+        <td>2026-01-07</td>
+        <td class="actions"><button class="viewBtn">View</button></td>
+      </tr>
+    </tbody>
+  </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
+ </body>
+ </html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Add Ticket - Create new support ticket in CRM System">
+    <meta name="keywords" content="CRM, add ticket, support, customer service, ticket creation">
+    <meta name="author" content="CRM System">
+    <title>Add Ticket - CRM System</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-customer-service me-2"></i>CRM System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">
+                            <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="add-ticket.html">
+                            <i class="fas fa-plus-circle me-1"></i> Add Ticket
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">
+                            <i class="fas fa-chart-line me-1"></i> Analytics
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user-circle me-1"></i> Admin User
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Sidebar -->
+                <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                    <div class="position-sticky pt-3">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fas fa-home me-2"></i> Home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" href="add-ticket.html">
+                                    <i class="fas fa-plus-circle me-2"></i> Add Ticket
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-ticket-alt me-2"></i> Tickets
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-users me-2"></i> Customers
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-chart-bar me-2"></i> Reports
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <i class="fas fa-cog me-2"></i> Settings
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+
+                <!-- Main Form Content -->
+                <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        <h1 class="h2">Add New Ticket</h1>
+                        <div class="btn-toolbar mb-2 mb-md-0">
+                            <button type="button" class="btn btn-secondary" onclick="window.location.href='index.html'">
+                                <i class="fas fa-arrow-left me-1"></i> Back to Dashboard
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Ticket Form -->
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-primary">Ticket Information</h6>
+                                </div>
+                                <div class="card-body">
+                                    <form id="ticketForm" novalidate>
+                                        <!-- Customer Information -->
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="customerName" class="form-label">Customer Name *</label>
+                                                <input type="text" class="form-control" id="customerName" name="customerName" required>
+                                                <div class="invalid-feedback">Please enter customer name</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="customerEmail" class="form-label">Email Address *</label>
+                                                <input type="email" class="form-control" id="customerEmail" name="customerEmail" required>
+                                                <div class="invalid-feedback">Please enter a valid email address</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="customerPhone" class="form-label">Phone Number</label>
+                                                <input type="tel" class="form-control" id="customerPhone" name="customerPhone" placeholder="(123) 456-7890">
+                                                <div class="invalid-feedback">Please enter a valid phone number</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="customerCompany" class="form-label">Company</label>
+                                                <input type="text" class="form-control" id="customerCompany" name="customerCompany">
+                                            </div>
+                                        </div>
+
+                                        <!-- Ticket Details -->
+                                        <hr>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="ticketCategory" class="form-label">Category *</label>
+                                                <select class="form-select" id="ticketCategory" name="ticketCategory" required>
+                                                    <option value="">Select Category</option>
+                                                    <option value="technical">Technical Support</option>
+                                                    <option value="billing">Billing Issue</option>
+                                                    <option value="account">Account Management</option>
+                                                    <option value="feature">Feature Request</option>
+                                                    <option value="bug">Bug Report</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                                <div class="invalid-feedback">Please select a category</div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="ticketPriority" class="form-label">Priority *</label>
+                                                <select class="form-select" id="ticketPriority" name="ticketPriority" required>
+                                                    <option value="">Select Priority</option>
+                                                    <option value="low">Low</option>
+                                                    <option value="medium">Medium</option>
+                                                    <option value="high">High</option>
+                                                    <option value="urgent">Urgent</option>
+                                                </select>
+                                                <div class="invalid-feedback">Please select priority level</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="ticketSubject" class="form-label">Subject *</label>
+                                            <input type="text" class="form-control" id="ticketSubject" name="ticketSubject" required placeholder="Brief description of the issue">
+                                            <div class="invalid-feedback">Please enter a subject</div>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="ticketDescription" class="form-label">Description *</label>
+                                            <textarea class="form-control" id="ticketDescription" name="ticketDescription" rows="6" required placeholder="Detailed description of the issue or request"></textarea>
+                                            <div class="invalid-feedback">Please provide a description</div>
+                                            <div class="form-text">Minimum 20 characters required</div>
+                                        </div>
+
+                                        <!-- Attachments -->
+                                        <div class="mb-3">
+                                            <label for="ticketAttachments" class="form-label">Attachments</label>
+                                            <input type="file" class="form-control" id="ticketAttachments" name="ticketAttachments" multiple accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
+                                            <div class="form-text">Allowed formats: JPG, PNG, PDF, DOC, DOCX (Max 5MB each)</div>
+                                            <div id="attachmentPreview" class="mt-2"></div>
+                                        </div>
+
+                                        <!-- Additional Information -->
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <label for="assignedTo" class="form-label">Assign To</label>
+                                                <select class="form-select" id="assignedTo" name="assignedTo">
+                                                    <option value="">Unassigned</option>
+                                                    <option value="agent1">John Smith</option>
+                                                    <option value="agent2">Sarah Johnson</option>
+                                                    <option value="agent3">Mike Davis</option>
+                                                    <option value="agent4">Emily Wilson</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="dueDate" class="form-label">Due Date</label>
+                                                <input type="date" class="form-control" id="dueDate" name="dueDate">
+                                            </div>
+                                        </div>
+
+                                        <!-- Submit Buttons -->
+                                        <div class="d-flex justify-content-between">
+                                            <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                                                <i class="fas fa-redo me-1"></i> Reset Form
+                                            </button>
+                                            <div>
+                                                <button type="button" class="btn btn-outline-primary me-2" onclick="saveDraft()">
+                                                    <i class="fas fa-save me-1"></i> Save Draft
+                                                </button>
+                                                <button type="submit" class="btn btn-primary" id="submitBtn">
+                                                    <i class="fas fa-paper-plane me-1"></i> Submit Ticket
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Information -->
+                        <div class="col-lg-4">
+                            <!-- Quick Tips -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-info">
+                                        <i class="fas fa-lightbulb me-2"></i>Quick Tips
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Provide detailed description for faster resolution
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Include screenshots for technical issues
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Set appropriate priority level
+                                        </li>
+                                        <li class="mb-2">
+                                            <i class="fas fa-check text-success me-2"></i>
+                                            Mention error messages if any
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Recent Tickets -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-warning">
+                                        <i class="fas fa-history me-2"></i>Recent Tickets
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="list-group list-group-flush">
+                                        <div class="list-group-item px-0">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="mb-1">#TK-001</h6>
+                                                    <small class="text-muted">Login Issue</small>
+                                                </div>
+                                                <span class="badge bg-warning">Pending</span>
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item px-0">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="mb-1">#TK-002</h6>
+                                                    <small class="text-muted">Payment Error</small>
+                                                </div>
+                                                <span class="badge bg-success">Resolved</span>
+                                            </div>
+                                        </div>
+                                        <div class="list-group-item px-0">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <div>
+                                                    <h6 class="mb-1">#TK-003</h6>
+                                                    <small class="text-muted">Account Update</small>
+                                                </div>
+                                                <span class="badge bg-info">In Progress</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Support Info -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <h6 class="m-0 font-weight-bold text-secondary">
+                                        <i class="fas fa-headset me-2"></i>Need Help?
+                                    </h6>
+                                </div>
+                                <div class="card-body">
+                                    <p class="mb-2">
+                                        <i class="fas fa-phone me-2"></i>
+                                        <strong>Phone:</strong> 1-800-CRM-HELP
+                                    </p>
+                                    <p class="mb-2">
+                                        <i class="fas fa-envelope me-2"></i>
+                                        <strong>Email:</strong> support@crmsystem.com
+                                    </p>
+                                    <p class="mb-0">
+                                        <i class="fas fa-clock me-2"></i>
+                                        <strong>Hours:</strong> 24/7 Support
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- Custom JS -->
+    <script src="main.js"></script>
+    <script>
+        // Additional form-specific JavaScript
+        $(document).ready(function() {
+            // File upload preview
+            $('#ticketAttachments').on('change', function(e) {
+                var files = e.target.files;
+                var preview = $('#attachmentPreview');
+                preview.empty();
+                
+                if (files.length > 0) {
+                    var fileList = '<div class="mt-2"><h6>Selected Files:</h6><ul class="list-unstyled">';
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        var fileSize = (file.size / 1024 / 1024).toFixed(2);
+                        fileList += '<li class="mb-1"><i class="fas fa-file me-2"></i>' + 
+                                  file.name + ' (' + fileSize + ' MB)</li>';
+                    }
+                    fileList += '</ul></div>';
+                    preview.append(fileList);
+                }
+            });
+
+            // Character counter for description
+            $('#ticketDescription').on('input', function() {
+                var length = $(this).val().length;
+                var counter = $('#descriptionCounter');
+                if (counter.length === 0) {
+                    $(this).after('<small id="descriptionCounter" class="form-text">Characters: ' + length + '</small>');
+                } else {
+                    counter.text('Characters: ' + length);
+                }
+                
+                if (length < 20) {
+                    counter.addClass('text-danger');
+                } else {
+                    counter.removeClass('text-danger');
+                }
+            });
+
+            // Auto-save draft
+            var autoSaveTimer;
+            $('#ticketForm input, #ticketForm textarea, #ticketForm select').on('input change', function() {
+                clearTimeout(autoSaveTimer);
+                autoSaveTimer = setTimeout(function() {
+                    saveDraft(true); // silent save
+                }, 5000);
+            });
+        });
+
+        // Reset form
+        function resetForm() {
+            if (confirm('Are you sure you want to reset the form? All data will be lost.')) {
+                $('#ticketForm')[0].reset();
+                $('#attachmentPreview').empty();
+                $('#descriptionCounter').remove();
+                $('#ticketForm .form-control').removeClass('is-valid is-invalid');
+            }
+        }
+
+        // Save draft
+        function saveDraft(silent) {
+            var formData = $('#ticketForm').serializeArray();
+            var draftData = {};
+            
+            formData.forEach(function(field) {
+                draftData[field.name] = field.value;
+            });
+            
+            localStorage.setItem('ticketDraft', JSON.stringify(draftData));
+            
+            if (!silent) {
+                showAlert('info', 'Draft saved successfully!');
+            }
+        }
+
+        // Load draft on page load
+        $(document).ready(function() {
+            var draftData = localStorage.getItem('ticketDraft');
+            if (draftData) {
+                var draft = JSON.parse(draftData);
+                
+                // Populate form fields
+                Object.keys(draft).forEach(function(key) {
+                    var field = $('[name="' + key + '"]');
+                    if (field.length > 0 && draft[key]) {
+                        field.val(draft[key]);
+                    }
+                });
+                
+                // Show notification
+                showAlert('info', 'Draft loaded. You can continue editing or reset the form.');
+            }
+        });
+    </script>
+</body>
+</html>
